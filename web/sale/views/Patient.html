@@ -1,0 +1,137 @@
+<div class="row" ng-controller="patientChooseTab">
+	<div class="col-md-12">
+		<div class="m-portlet">								
+			<form name="patientForm" class="m-form" ng-submit="submitForm()" novalidate>
+				<div class="m-portlet__body">
+					<div class="m-form__section m-form__section--first">
+						<legend class="vd-legend">Personal Information</legend>
+						<div class="form-group m-form__group row">
+							<div class="col-lg-3">
+								<div class="form-group" ng-class="{'has-danger':patientForm.fullname.$invalid}">
+									<label>Full Name:</label>
+									<input type="text" name="fullname" ng-model="fullname"  class="form-control m-input" required>
+									<p ng-show="patientForm.fullname.$invalid" class="help-block help-block-error">Please Enter Full Name.</p>
+								</div>
+							</div>
+							<div class="col-lg-3">
+								<div class="form-group" ng-class="{'has-danger':patientForm.age.$invalid}">
+									<label class="">Age:</label>
+									<input type="number" class="form-control m-input" min="1" name="age" ng-model="age" required>
+									<p ng-show="patientForm.age.$invalid" class="help-block help-block-error">Please Enter Age</p>
+								</div>
+							</div>
+							<div class="col-lg-3">
+								<label class="">Age Type:</label>
+								<select class="custom-select form-control" name="ageType" ng-model="ageType">
+									<option ng-repeat="(key, value) in ageNames" value="{{key}}">{{value}}</option>
+								</select>
+							</div>
+							<div class="col-lg-3">
+								<label>Gender:</label>
+								<select class="custom-select form-control" name="gender" ng-model="gender">
+									<option ng-repeat="x in genderNames">{{x}}</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group m-form__group row">
+							<div class="col-lg-4">
+								<div class="form-group" ng-class="{'has-danger': patientForm.phonenumber.$invalid}">
+									<label>Mobile Number:</label>
+									<input type="number" ng-model="phonenumber" name="phonenumber"  class="form-control m-input" required>
+									<p ng-show="patientForm.phonenumber.$invalid" class="help-block help-block-error">Please Enter Phone Number</p>
+								</div>
+							</div>
+							<div class="col-lg-4">
+								<label class="">CNIC/Passport:</label>
+								<input type="text" name="cnic" ng-model="cnic"  class="form-control m-input">
+							</div>
+							<div class="col-lg-4">
+								<div class="form-group" ng-class="{'has-danger': patientForm.other_relation.$invalid}">
+									<label class="">Relationship:</label>
+									<div class="input-group my-group">
+										<select class="custom-select form-control" ng-model="relation" name="relation">
+											<option ng-repeat="x in relationNames">{{x}}</option>
+										</select>
+										<input  class="form-control m-input" name="other_relation" ng-model="other_relation"  ng-hide="checkRelationSelected()" ng-required="relation=='Other'">
+										<p ng-show="patientForm.other_relation.$invalid" class="help-block help-block-error">Please Enter Other Relation</p>
+									</div>
+								</div>
+							</div>
+						</div>
+						<legend class="vd-legend">Address</legend>
+						<div class="form-group m-form__group row">
+							<div class="col-lg-4">
+								<div class="form-group" ng-class="{'has-danger':patientForm.city.$invalid}">
+									<label>City:</label>
+									<input type="text" ng-model="city" name="city"  class="form-control m-input" required>
+									<p ng-show="patientForm.city.$invalid" class="help-block help-block-error">Please Enter City</p>
+								</div>
+							</div>
+							<div class="col-lg-4">
+								<div class="form-group" ng-class="{'has-danger':patientForm.country.$invalid}">
+									<label>Country:</label>
+									<input type="text" ng-model="country" name="country"  class="form-control m-input" required>
+									<p ng-show="patientForm.country.$invalid" class="help-block help-block-error">Please Enter Country</p>
+								</div>
+							</div>
+							<div class="col-lg-4">
+								<label class="">Address:</label>
+								<textarea name="address" ng-model="address" class="form-control"></textarea>
+							</div>
+						</div>
+						<legend class="vd-legend">Social Account</legend>
+						<div class="form-group m-form__group row">
+							<div class="col-lg-6">
+								<label>Email:</label>
+								<input type="email" name="email" ng-model="email"  class="form-control m-input" >
+							</div>
+							<div class="col-lg-6">
+								<label class="">WhatsApp Number:</label>
+								<input type="number" name="whatsapp" ng-model="whatsapp"  class="form-control m-input" >
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+			<!--end::Form-->
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+	$(".modal .modal-dialog").attr("class", "modal-dialog modal-dialog-slideout modal-lg");
+
+	function dialog_animation(x) {
+		console.log("Closed");
+		$(".modal .modal-dialog").attr("class", "modal-dialog " + x + "  animated");
+	};
+
+	$('.modal').on('hide.bs.modal', function (e) {
+		var anim = 'slideOutRight';
+		//dialog_animation(anim);
+	});
+
+	setTimeout(function(){
+		$('.modal').on('shown.bs.modal', function() {
+			$('.focus').select();
+			$('.focus').focus();
+		})
+		$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+			var target = e.target.attributes.href.value;
+			$(target +' input').select();
+			$(target +' input').focus();
+		})
+	});
+
+	var Autosize={
+		init:function(){
+			var i,t;
+			i=$("#m_autosize_1"),t=$("#m_autosize_2"),autosize(i),autosize(t),autosize.update(t)
+		}
+	};
+
+	jQuery(document).ready(function(){
+		Autosize.init()
+	});
+</script>
+

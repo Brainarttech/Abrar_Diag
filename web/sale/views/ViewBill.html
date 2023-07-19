@@ -1,0 +1,175 @@
+<div class="container">
+
+    <div class="row">
+        <div class="col-sm-7">
+            <h4>Abrar Diagnostic Centre</h4>
+            <p style="margin-top: -7px;"><strong>312-E Charging Cross,<br>Peshawar Road, Rawalpindi Cantt</strong></p>
+        </div>
+        <div class="col-sm-5">
+            <p >Tel: 5470205, 5462750, 5473543<br>Fax: 051-8317450, Cell: 0331-5261589<br>
+                Email: mri_ct@hotmail.com<br>Web: www.abrardiagnostics.com.pk</p>
+        </div>
+
+    </div>
+    <hr>
+    <hr>
+
+    <div class="row" style="margin-top: 15px;">
+        <div class="col-sm-7">
+            <p>
+                <strong>Receipt No:</strong>
+                #########<br>
+                <strong>Client Name:</strong>
+                {{patientName}}<br>
+                <strong>Date/Time:</strong>
+
+
+
+                <span id="datetime"></span><br>
+
+            </p>
+        </div>
+        <div class="col-sm-5">
+            <p class="">
+                <strong>Client No:</strong>
+                {{patientReg}}<br>
+                <strong>Age/Sex:</strong>
+                # / #<br>
+                <strong>Referred By:</strong>
+                {{referredName}}<br>
+
+            </p>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="panel panel-default">
+
+                <div class="panel-body">
+                    <div class="table-responsive">
+                        <table class="table table-condensed font">
+                            <thead style="
+                                    border-top: 2px solid black;
+                                    border-bottom:  2px solid black;
+                                    ">
+                            <tr>
+                                <td><strong>Test Detail</strong></td>
+                                <td class="text-center"><strong>Report Delivery Date/Time</strong></td>
+                                <td class="text-right"><strong>Charges</strong></td>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <!-- foreach ($order->lineItems as $line) or some such thing here -->
+                            <tr ng-repeat="item in orderlist">
+
+
+
+                                <td>
+                                    {{item.name}}
+                                </td>
+
+                                <td class="text-center"><span class="delivery"></span> </td>
+
+                                <td class="text-right">{{item.rate}}</td>
+
+
+                            </tr>
+
+
+
+
+                            <tr>
+                                <td class="no-line"></td>
+                                <td class="no-line text-right"><strong>Sub Total</strong></td>
+                                <td class="no-line text-right">Rs {{total}}</td>
+                            </tr>
+
+                            <tr ng-show="discountAmount>0">
+                                <td class="no-line"></td>
+                                <td class="no-line text-right"><strong>Discount</strong></td>
+                                <td class="no-line text-right">Rs {{discountAmount}}</td>
+                            </tr>
+
+                            <tr>
+                                <td class="no-line"></td>
+                                <td class="no-line text-right"><strong>Payable</strong></td>
+                                <td class="no-line text-right">Rs {{grandTotal}}</td>
+                            </tr>
+
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center">Please bring this receipt for Report Collection / further Investigations </p>
+			<img src="http://localhost/erp_dev/web/images/frame.png" alt="Facebook QR Code" height="42" width="42">
+        </div>
+    </div>
+</div>
+    <script type="text/javascript">
+
+        $(".modal .modal-dialog").attr("class", "modal-dialog modal-dialog-slideout modal-lg");
+
+        function dialog_animation(x) {
+            console.log("Closed");
+            $(".modal .modal-dialog").attr("class", "modal-dialog " + x + "  animated");
+        };
+
+        $('.modal')
+                .on('hide.bs.modal', function (e) {
+                    var anim = 'slideOutRight';
+                    //dialog_animation(anim);
+                });
+
+
+        var currentdate = new Date();
+        var report_date = new Date(new Date().getTime() + 60 * 60 * 24 * 1000);
+
+        function getAMPM(currentdate) {
+
+            var hours = currentdate.getHours();
+            var minutes = currentdate.getMinutes();
+            var ampm = hours >= 12 ? 'PM' : 'AM';
+            hours = hours % 12;
+            hours = hours ? hours : 12; // the hour '0' should be '12'
+            minutes = minutes < 10 ? '0'+minutes : minutes;
+            var strTime = hours + ':' + minutes + ' ' + ampm;
+
+            return strTime;
+
+        }
+
+
+
+        var datetime = " " + ('0' + currentdate.getDate()).slice(-2) + '-'
+                + ('0' + (currentdate.getMonth()+1)).slice(-2) + '-'
+                + currentdate.getFullYear() + " "
+                + getAMPM(currentdate);
+
+        var datetimedelivery = " " + ('0' + report_date.getDate()).slice(-2) + '-'
+                + ('0' + (report_date.getMonth()+1)).slice(-2) + '-'
+                + report_date.getFullYear() + " "
+                + getAMPM(report_date);
+
+
+
+        console.log(datetimedelivery);
+
+        $('#datetime').text(datetime);
+
+        setTimeout(function(){
+
+            $('.delivery').text(datetimedelivery);
+
+        },1000);
+
+
+
+
+
+
+    </script>

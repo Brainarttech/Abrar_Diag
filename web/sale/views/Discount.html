@@ -1,0 +1,26 @@
+<div ng-controller="DiscountTab">
+<!-- FIXED ShOW CLASS ISSUE UI-BOOTSTRAP-TPLS-2.5.0.js LINE 7692 -->
+
+
+  <uib-tabset active="activeTab">
+    <uib-tab index="$index + 1"  ng-repeat="tab in discountTabs" heading="{{tab.title}}" select="setActive(tab.id)">
+      <div ng-bind-html="tab.content" compile></div>
+    </uib-tab>
+  </uib-tabset>
+
+</div>
+
+<script type="text/javascript">
+  
+  $('.modal').on('shown.bs.modal', function() {
+         $('.focus').select();
+          $('.focus').focus();
+})
+
+$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+  var target = e.target.attributes.href.value;
+  $(target +' input').select();
+  $(target +' input').focus();
+})
+  
+</script>

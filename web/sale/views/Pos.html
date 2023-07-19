@@ -1,0 +1,393 @@
+
+
+<div class="col-lg-7" >
+    <div class="m-portlet m-portlet--tabs m-portlet--head-solid-bg m-portlet--sortable" style="">
+
+        <div class="m-portlet__body pos">
+            <table class="table m-table">
+
+                <tbody>
+                    <tr class="m-table">
+
+                <div class="row" ng-hide="checkPatientSelected()">
+                    <!--<p>Model: {{selectedPatient|json}}</p>-->
+                    <div class="col-md-9" style="padding-right: 0px;">
+                        <input type="text" class='form-control m-input typeahead' placeholder="Search for Patient...." sf-typeahead options="exampleOptions" datasets="patientDataSet" ng-model="selectedPatient" aria-describedby="basic-addon1">
+
+
+                    </div>
+                    <div class="col-md-3" style="padding-right: 0px;">
+                        <button class="btn btn-info" type="button" ng-bootbox-custom-dialog ng-bootbox-options="patientDialogOptions" >
+                            Add New Patient
+                        </button>
+                    </div>
+                </div>
+
+
+
+
+                <!-- <div class="row">
+                     <input type="text" class='form-control m-input typeahead' placeholder="Search for Patient...." sf-typeahead options="exampleOptions" datasets="numbersDataset" ng-model="selectedNumber" aria-describedby="basic-addon1">
+
+                     <button class="btn btn-info" type="button" ng-bootbox-custom-dialog ng-bootbox-options="patientDialogOptions" my-enter="doSomething()">
+                         Add New Patient
+                     </button>
+
+                 </div>-->
+
+                <div class="m-widget4" ng-show="checkPatientSelected()">
+
+                    <div class="m-widget4__item">
+                        <div class="m-widget4__img m-widget4__img&#45;&#45;pic">
+                            <img src="../images/user.png" alt="">
+                        </div>
+                        <div class="m-widget4__info">
+                            <span class="m-widget4__title custom_title">
+                                {{patientName}}
+                            </span>
+                            <span class="m-badge m-badge--accent m-badge--wide ng-binding" style="
+                                  margin-left: 10px;
+                                  margin-top: -13px;
+                                  ">
+                                {{referredName}}
+                            </span>
+                            <br>
+                            <span class="m-widget4__sub">
+                                {{patientReg}} | {{patientPhone}} | {{patientAge}}
+                            </span>
+                        </div>
+
+                        <div class="m-widget4__ext">
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-sm btn-brand btn-info">
+                                    Action
+                                </button>
+                                <button type="button" class="btn btn-sm btn-brand dropdown-toggle btn-info dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <span class="sr-only">
+                                        Toggle Dropdown
+                                    </span>
+                                </button>
+                                <div class="dropdown-menu" x-placement="top-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(127px, 0px, 0px);">
+                                    <a class="dropdown-item" href="javascript:" ng-bootbox-custom-dialog ng-bootbox-options="referredDialogOptions">
+                                        Add Referral
+                                    </a>
+                                    <a class="dropdown-item" href="javascript:" _target='_self'>
+                                        Add Panel
+                                    </a>
+
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#" ng-click="$event.preventDefault();
+                                                removePatinet()" >
+                                        Remove
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+
+                </tr>
+
+                </tbody>
+            </table>
+
+            <div style="height: 245px;">
+
+
+                <table class="table table-hover"  orderdatatable>
+                    <thead>
+                        <tr>
+
+                            <th>
+                                Test
+                            </th>
+                            <th>
+                                Charges
+                            </th>
+                            <th>
+                                Discount
+                            </th>
+                            <th>
+                                Total
+                            </th>
+                            <th>
+                                Action
+
+                            </th>
+
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+
+                        <tr ng-repeat="item in orderlist">
+
+
+
+                            <td>
+                                {{item.name}}
+                            </td>
+
+                            <td class="text-center">{{item.rate}}</td>
+
+                            <td class="text-center">{{item.discount}}</td>
+                            <td class="text-center">{{item.total}}</td>
+
+                            <td class="text-center">&nbsp;&nbsp;<i class=" fa fa-edit" id="1528983789825" title="Discount" ng-click="addItemDiscount(item)" style="cursor:pointer;" ></i>&nbsp;&nbsp;<i class="  flaticon-delete-1"  title="Remove" style="cursor:pointer;" ng-click="addToCart(item, item.id)"></i></td>
+
+                        </tr>
+
+
+                    </tbody>
+                </table>
+            </div>
+
+
+            <table id="totalTable" style="width:100%; float:right; padding:5px; color:#000; background: #FFF;">
+                <tbody>
+                    <tr>
+                        <td style="padding: 5px 10px;border-top: 1px solid #DDD;">Items</td>
+                        <td class="text-right" style="padding: 5px 10px;font-size: 14px; font-weight:bold;border-top: 1px solid #DDD;">
+                            <span id="titems">{{count}}</span>
+                        </td>
+                        <td style="padding: 5px 10px;border-top: 1px solid #DDD;">Total</td>
+                        <td class="text-right" style="padding: 5px 10px;font-size: 14px; font-weight:bold;border-top: 1px solid #DDD;">
+                            <span id="total">{{total}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 10px;">Order Tax <a href="#" id="pptax2" tabindex="-1">
+
+                            </a>
+                        </td>
+                        <td class="text-right" style="padding: 5px 10px;font-size: 14px; font-weight:bold;">
+                            <span id="ttax2">{{tax}}</span>
+                        </td>
+                        <td style="padding: 5px 10px;" ng-hide="testDiscount">Discount {{discountType == 1 ? '(RS)' : ''}} {{discountType == 2 ? '(%)' : ''}}
+                            <a href="javascript:" id="ppdiscount" tabindex="-1" ng-bootbox-custom-dialog ng-bootbox-options="discountDialogOptions">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                        </td>
+                        <td class="text-right" ng-hide="testDiscount" style="padding: 5px 10px;font-weight:bold;">
+                            <span id="tds">{{discountAmount}} {{discountType == 2 ? '(' + discount + '%)' : ''}}</span>
+                        </td>
+
+
+                        <td style="padding: 5px 10px;" ng-show="testDiscount">Discount
+                        </td>
+                        <td class="text-right" ng-show="testDiscount" style="padding: 5px 10px;font-weight:bold;">
+                            <span id="tds">{{testDiscount}}</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 5px 10px; border-top: 1px solid #666; border-bottom: 1px solid #333; font-weight:bold; background:#333; color:#FFF;" colspan="2">
+                            Total Payable                                            <a href="#" id="pshipping" tabindex="-1">
+
+                            </a>
+                            <span id="tship"></span>
+                        </td>
+                        <td class="text-right" style="padding:5px 10px 5px 10px; font-size: 14px;border-top: 1px solid #666; border-bottom: 1px solid #333; font-weight:bold; background:#333; color:#FFF;" colspan="2">
+                            <span id="gtotal">{{grandTotal}}</span>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+
+
+
+            <div class="btn-group text-center btn-group-lg" style="margin-top: 10px;" role="group" aria-label="Large button group">
+                <a href="javascript:" ng-click="showPatientSelectError()" ng-hide="paymentButttonEnable()" class="btn btn-success m-btn m-btn--icon">
+                    <span>
+                        <i class="la la-money"></i>
+                        <span>Payment</span>
+                    </span>
+                </a>
+                <a href="javascript:" ng-show="paymentButttonEnable()" class="btn btn-success m-btn m-btn--icon"  ng-bootbox-custom-dialog ng-bootbox-options="paymentDialogOptions">
+                    <span>
+                        <i class="la la-money"></i>
+                        <span>Payment</span>
+                    </span>
+                </a>
+                <a href="javascript:" ng-click="showPatientSelectError()" ng-hide="paymentButttonEnable()" class="btn btn-warning m-btn m-btn--icon">
+                    <span>
+                        <i class="la la-desktop"></i>
+                        <span>View Bill</span>
+                    </span>
+                </a>
+                <a href="javascript:" ng-show="paymentButttonEnable()" class="btn btn-warning m-btn m-btn--icon" ng-bootbox-custom-dialog ng-bootbox-options="viewBillDialogOptions">
+                    <span>
+                        <i class="la la-desktop"></i>
+                        <span>View Bill</span>
+                    </span>
+                </a>
+                <a href="javascript:"  ng-bootbox-confirm="Are you sure you want to confirm this?"
+                   ng-bootbox-confirm-action="clear()"  target="_self" class="btn btn-danger m-btn m-btn--icon">
+                    <span>
+                        <i class="la la-times-circle"></i>
+                        <span>Cancel</span>
+                    </span>
+                </a>
+                <a href="#" class="btn btn-primary m-btn m-btn--icon">
+                    <span>
+                        <i class="la la-refresh"></i>
+                        <span>Reload Tests</span>
+                    </span>
+                </a>
+            </div>
+
+
+
+
+
+        </div>
+    </div>
+
+</div>
+
+
+<div class="col-lg-5">
+    <div class="m-portlet m-portlet--tabs m-portlet--head-solid-bg m-portlet--sortable" style="">
+
+        <div class="m-portlet__body pos">
+
+            <div class="form-group m-form__group">
+
+                <div class="input-group  m-input-group">
+                    <input ng-model="mysearch" ng-keyup="search(mysearch)" type="text" class="form-control m-input" placeholder="Search ......." aria-describedby="basic-addon1">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">
+                            <i class="la la-search"></i>
+                        </span>
+                    </div>
+
+                </div>
+            </div>
+
+
+
+
+            <div class="row rowoverride" style="border: #ebedf2 1px solid;">
+
+                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs text-center slick-button cat-prev" style="padding:0;border-right:solid 1px #EEE;"><i style="font-size:20px;line-height:40px;" class="fa fa-arrow-left"></i>
+                </div>
+
+
+                <div class="col-lg-10 col-md-10 col-sm-12 add_slick_inside" style="padding:0;">
+
+
+                    <!-- <div class="slick slick-wrapper">
+                         Waiting Categories 
+                     </div>-->
+
+                    <div  class="slick-wrapper" slick>
+                        <div ng-repeat="c in category" ng-click="searchById(c.id)"  data-cat-id={{c.id}} style="padding:0px 20px;line-height:40px;border-right:solid 1px #EEE;margin-right:-1px;font-weight:bold;font-size:16px;" class="text-center slick-item slick">{{c.name}}</div>
+                    </div>
+
+                </div>
+
+                <div class="col-lg-1 col-md-1 hidden-sm hidden-xs text-center slick-button cat-next" style="padding:0;border-left:solid 1px #EEE;"><i style="font-size:20px;line-height:40px;" class="fa fa-arrow-right"></i>
+                </div>
+            </div>
+
+
+
+
+
+
+            <div style="margin-top:30px;">
+
+
+
+
+                <table class="table  table-hover" datatable> 
+                    <thead>
+                        <tr>
+                            <th>
+                                ID
+                            </th>
+
+                            <th>
+                                Test
+                            </th>
+                            <th>
+                                Charges
+                            </th>
+                            <th>
+                                Consultant Amount
+                            </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+
+
+                        <tr  ng-repeat="i in items" ng-click="addToCart(i, i.id)" ng-class="isSelected[i.id]" style="cursor: pointer;" id="items_{{i.id}}" >
+
+                            <td>    
+                                {{i.cat_id}}
+                            </td>
+
+                            <td>
+                                {{i.name}}
+                            </td>
+                            <td>
+                                {{i.rate}}
+                            </td>
+                            <td>
+                                {{i.consultant_amount}}
+                                <span ng-init="$last?getSaleItems():null"></span>
+                            </td>
+                        </tr>
+
+
+                    </tbody>
+                </table>
+
+
+
+            </div>
+
+
+
+        </div>
+
+
+
+
+
+
+
+    </div>
+
+    <style type="text/css">
+        .slick-button:hover {
+            background : #F2F2F2;
+            cursor: pointer;
+        }
+        .slick-item:hover {
+            box-shadow:inset 0px -3px 10px 5px #F2F2F2;
+            cursor: pointer
+        }
+        .slick-item-active {
+            background: #EEE
+        }
+
+        .dataTables_scrollHead{
+            margin-top: -25px;
+        }
+
+
+    </style>
+
+
+
+
+</div>
+
+
+

@@ -1,0 +1,47 @@
+<div class="modal-header">
+    <h3 class="modal-title" id="modal-title">Test Discount</h3>
+</div>
+<div class="modal-body" id="modal-body">
+   <!-- <ul>
+        {{pc.data}}
+    </ul>-->
+
+    <div class="form-group">
+        <div class="margin-bottom-10">Amount In Rs</div>
+        <input type="text"  ng-model="testdiscount" floating-number-only="" ng-pattern="/(^[0-9]{1,9})+(.[0-9]{1,4})?$/" name="testdiscount" class="form-control input-hike-large ng-pristine ng-valid ng-not-empty ng-valid-pattern ng-touched" format="decimal" selected="true" style="">
+
+    </div>
+
+    <div class="form-group">
+        <div class="margin-bottom-10">Reason</div>
+        <select class="form-control" ng-model="testreason" name="testReason" >
+
+            <option ng-repeat="product in reason" value="{{product.id}}" >{{product.name}}
+        </select>
+        </div>
+
+
+
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="pc.ok()">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="pc.cancel()">Cancel</button>
+</div>
+
+
+
+<script type="text/javascript">
+
+    $('.modal').on('shown.bs.modal', function() {
+        $('.focus').select();
+        $('.focus').focus();
+    })
+
+    $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+        var target = e.target.attributes.href.value;
+        $(target +' input').select();
+        $(target +' input').focus();
+    })
+
+</script>
+

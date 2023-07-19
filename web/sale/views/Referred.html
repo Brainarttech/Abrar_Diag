@@ -1,0 +1,44 @@
+<style>
+    label{
+        font-weight:600;
+    }
+</style>
+
+<div ng-controller="referredChooseTab">
+    <form name="referredForm" class="m-form" ng-submit="submitReferred()" novalidate>
+    <div class="form-row">
+        <div class="form-group col-md-6" ng-class="{'has-danger':referredForm.referred_name.$touched && referredForm.referred_name.$invalid}">
+            <label >Name</label>
+            <input type="text" class='form-control m-input typeahead' placeholder="Search for Referred...." sf-typeahead options="exampleOptions" datasets="referredDataSet" ng-model="referred_name" aria-describedby="basic-addon1" required>
+            <p ng-show="referredForm.referred_name.$touched && referredForm.referred_name.$invalid" class="help-block help-block-error">Please Enter Full Name.</p>
+
+        </div>
+        <div class="form-group col-md-6">
+            <label >Phone Number</label>
+            <input type="number" name="referred_phone" ng-model="referred_phone" class="form-control">
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-md-6">
+            <label>CNIC</label>
+            <input type="number" name="referred_cnic" ng-model="referred_cnic" class="form-control">
+        </div>
+        <div class="form-group col-md-6">
+            <label>Email</label>
+            <input type="email" name="referred_email" ng-model="referred_email" class="form-control">
+        </div>
+    </div>
+
+        <div class="form-row">
+            <div class="form-group col-md-6">
+                <label>Hospital Name</label>
+                <input type="text" name="referred_hospital" ng-model="referred_hospital" class="form-control">
+            </div>
+            <div class="form-group col-md-6">
+                <label>Address</label>
+                <textarea class="form-control" name="referred_address" ng-model="referred_address"></textarea>
+            </div>
+        </div>
+
+</form>
+</div>

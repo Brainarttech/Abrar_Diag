@@ -1,0 +1,90 @@
+<div class="row" ng-controller="PaymentChooseTab">
+	<div class="col-md-7">
+		<div class="m-portlet m-portlet--mobile">
+			<div class="m-portlet__body">
+				<!-- Nav tabs -->
+				<uib-tabset active="activeTab">
+					<uib-tab index="$index + 1"  ng-repeat="tab in Paymenttabs" heading="{{tab.title}}" select="setActive(tab.id)">
+						<div ng-bind-html="tab.content" compile></div>
+					</uib-tab>
+				</uib-tabset>
+			</div>
+		</div>
+	</div>
+	<div class="col-md-5">
+		<div class="m-portlet m-portlet--mobile">
+			<div class="m-portlet__head">
+				<div class="m-portlet__head-caption">
+					<div class="m-portlet__head-title">
+						<h3 class="m-portlet__head-text">SALE SUMMARY</h3>
+					</div>
+				</div>
+			</div>
+			<div class="m-portlet__body" style="height:405px;overflow-x:auto;">
+				<div class="row margin-10">
+					<div class="col-md-6">Discount:</div>
+					<div class="col-md-6 text-right">Rs{{discountAmount}}</div>
+				</div>
+				<div class="row margin-10">
+					<div class="col-md-6">Subtotal:</div>
+					<div class="col-md-6 text-right">Rs {{total}}</div>
+				</div>
+				<div class="row margin-10">
+					<div class="col-md-6">Tax:</div>
+					<div class="col-md-6 text-right">Rs {{tax}}</div>
+				</div>
+				<hr>
+				<div class="row margin-10">
+					<div class="col-md-6">Sale total::</div>
+					<div class="col-md-6 text-right">Rs {{grandTotal}}</div>
+				</div>
+				<hr>
+				<div class="row margin-10">
+					<div class="col-md-6"><strong>Payment :</strong></div>
+					<div class="col-md-6 text-right"><strong>Rs {{toPay}}</strong></div>
+				</div>
+				<hr>
+				<div class="row margin-10">
+					<div class="col-md-6"><strong>Remaining:</strong></div>
+					<div class="col-md-6 text-right"><strong>Rs  {{remaining}}</strong></div>
+				</div>
+				<hr>
+				<div class="row margintop-25 ">
+					<h5 class="text-center" style="width: 100%">Payment List</h5>
+				</div>
+				<table class="table table-bordered table-hover">
+					<tbody>
+						<tr ng-repeat="m in mop">
+							<td class="text-center">{{ m.name }}</td>
+							<td class="text-center">{{ m.value }}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+	$(".modal .modal-dialog").attr("class", "modal-dialog modal-dialog-slideout modal-lg");
+	
+	function dialog_animation(x) {
+		//console.log("Closed");
+		$(".modal .modal-dialog").attr("class", "modal-dialog " + x + "  animated");
+	};
+	
+	$('.modal').on('hide.bs.modal', function (e) {
+		var anim = 'slideOutRight';
+		//dialog_animation(anim);
+	});
+	setTimeout(function(){
+		$('.modal').on('shown.bs.modal', function() {
+			$('.focus').select();
+			$('.focus').focus();
+		})
+		$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+			var target = e.target.attributes.href.value;
+			$(target +' input').select();
+			$(target +' input').focus();
+		})
+	});
+</script>

@@ -1,0 +1,254 @@
+
+	.modal-header{
+		display: block;
+	}
+
+
+.right .modal-body{
+	background: #e5e5e5;
+}
+.modal-dialog-slideout {min-height: 100%; margin: 0 0 0 auto;background: #fff;}
+.modal.fade .modal-dialog.modal-dialog-slideout {-webkit-transform: translate(100%,0)scale(1);transform: translate(100%,0)scale(1);}
+.modal.fade.show .modal-dialog.modal-dialog-slideout {-webkit-transform: translate(0,0);transform: translate(0,0);display: flex;align-items: stretch;-webkit-box-align: stretch;height: 100%;}
+.modal.fade.show .modal-dialog.modal-dialog-slideout .modal-body{overflow-y: auto;overflow-x: hidden;}
+.modal-dialog-slideout .modal-content{border: 0;}
+.modal-dialog-slideout .modal-header, .modal-dialog-slideout .modal-footer {height: 69px; display: block;} 
+.modal-dialog-slideout .modal-header h5 {float:left;}
+
+
+.margin-10{
+	margin-bottom: 10px;
+}
+
+.margintop-25{
+	margin-top: 15px;
+}
+
+
+.input-hike-large {
+	font-size : 40px;
+	padding: 0 0;
+	height: auto;
+}
+
+.greenulator {
+ 
+  margin: 30px auto 5px;
+  position: relative;
+  -moz-border-radius-bottomleft: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  -moz-border-radius-bottomright: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  overflow: hidden;
+  width: 60%;
+}
+
+.greenulator .section .buttons {
+  height: 100%;
+  display: block;
+  width: 100%;
+  float: left;
+}
+.greenulator .section .buttons .btn {
+  cursor: pointer;
+  border: none;
+  -moz-user-select: -moz-none;
+  -ms-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
+  float: left;
+  color: #666666;
+  font-size: 24.79px;
+  font-weight: 600;
+  margin: 0 12px 12px 0;
+  text-decoration: none;
+  background-color: #f2f2f2;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  
+  vertical-align: middle;
+  outline: none;
+}
+.greenulator .section .buttons .btn:hover {
+  background-color: #efefef;
+}
+.greenulator .section .buttons .btn:active {
+  background-color: #e5e5e5;
+}
+.greenulator .section .buttons .btn.right {
+  float: right;
+}
+.greenulator .section .buttons .btn.green {
+  background-color: #81c784;
+  color: #ffffff;
+}
+.greenulator .section .buttons .btn.green:active {
+  background-color: #6fbf73;
+}
+.greenulator .section .buttons .btn.symbol {
+  width: 90px;
+  height: 60px;
+  line-height: 60px;
+}
+.greenulator .section .buttons .btn.pink {
+  background-color: #f50057;
+  color: #ffffff;
+}
+.greenulator .section .buttons .btn.pink:active {
+  background-color: #dc004e;
+}
+.greenulator .section .buttons .btn.long {
+  width: 112px;
+}
+.greenulator .section .buttons .btn.tall {
+  height: 114px;
+  line-height: 114px;
+}
+    span.twitter-typeahead .tt-menu {
+        cursor: pointer;
+        width: 100% !important;
+    }
+
+
+
+
+
+    .dropdown-menu, span.twitter-typeahead .tt-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        max-height: 350px;
+        overflow-y: auto;
+        z-index: 1000;
+        display: none;
+        float: left;
+        min-width: 160px;
+        padding: 5px 0;
+        margin: 2px 0 0;
+        font-size: 1rem;
+        color: #373a3c;
+        text-align: left;
+        list-style: none;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid rgba(0, 0, 0, 0.15);
+        border-radius: 0.25rem; }
+
+    span.twitter-typeahead .tt-suggestion {
+        display: block;
+        width: 100%;
+        padding: 3px 20px;
+        clear: both;
+        font-weight: normal;
+        line-height: 1.5;
+        color: #373a3c;
+        text-align: inherit;
+        white-space: nowrap;
+        background: none;
+        border: 0; }
+    span.twitter-typeahead .tt-suggestion:focus, .dropdown-item:hover, span.twitter-typeahead .tt-suggestion:hover {
+        color: #2b2d2f;
+        text-decoration: none;
+        background-color: #f5f5f5; }
+    span.twitter-typeahead .active.tt-suggestion, span.twitter-typeahead .tt-suggestion.tt-cursor, span.twitter-typeahead .active.tt-suggestion:focus, span.twitter-typeahead .tt-suggestion.tt-cursor:focus, span.twitter-typeahead .active.tt-suggestion:hover, span.twitter-typeahead .tt-suggestion.tt-cursor:hover {
+        color: #fff;
+        text-decoration: none;
+        background-color: #0275d8;
+        outline: 0; }
+    span.twitter-typeahead .disabled.tt-suggestion, span.twitter-typeahead .disabled.tt-suggestion:focus, span.twitter-typeahead .disabled.tt-suggestion:hover {
+        color: #818a91; }
+    span.twitter-typeahead .disabled.tt-suggestion:focus, span.twitter-typeahead .disabled.tt-suggestion:hover {
+        text-decoration: none;
+        cursor: not-allowed;
+        background-color: transparent;
+        background-image: none;
+        filter: "progid:DXImageTransform.Microsoft.gradient(enabled = false)"; }
+    span.twitter-typeahead {
+        width: 100%; }
+    .input-group span.twitter-typeahead {
+        display: block !important; }
+    .input-group span.twitter-typeahead .tt-menu {
+        top: 2.375rem !important; }
+
+   /* .tt-input{
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075)}*/
+/*
+    .tt-menu{
+    @extend .list-group
+    box-shadow: 0 5px 10px rgba(0,0,0,.2)
+    width: 100%
+    }*/
+
+   /* .tt-suggestion {
+    @extend . list-group-item
+    }*/
+
+   /* .tt-selectable {
+    @extend . list-group-item-action
+    }*/
+    /** Movie Card (Movie Suggestions) **/
+    .movie-card {
+      position: relative;
+      padding: 8px;
+    }
+    .movie-card-poster {
+      position: absolute;
+      top: 8px;
+      left: 8px;
+      width: 52px;
+      height: 52px;
+      border: 2px solid #ccd6dd;
+      border-radius: 5px;
+    }
+    .movie-card:hover .movie-card-poster {
+      border-color: #f5f8fa;
+    }
+    .movie-card-details {
+      min-height: 60px;
+      padding-left: 60px;
+    }
+    .movie-card-name{
+      display: inline-block;
+    }
+    .movie-card-name {
+      font-weight: 700;
+    }
+    .movie-card-plot {
+      font-size: 13px;
+      line-height: 18px;
+    }
+    .movie-card:hover,
+    .movie-card.is-active {
+      color: #fff;
+      background: #0088CC;
+      cursor: pointer;
+    }
+    .empty-message {
+      position: relative;
+      padding: 10px;
+      font-size: 16px;
+      line-height: 30px;
+      text-align: center;
+    }
+
+
+    .vd-colour-do {
+        color :#f5657d;
+    }
+
+    .has-danger .form-control, .has-danger .input-group-text{
+        border-color: #f5657d;
+    }
+
+    .dataTables_scrollHeadInner{
+        width:100% !important;
+    }
+    .dataTables_scrollHeadInner table{
+        width:100% !important;
+    }

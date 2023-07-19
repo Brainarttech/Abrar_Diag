@@ -1,0 +1,331 @@
+<div class="col-lg-12">
+  <div
+    class="m-portlet m-portlet--tabs m-portlet--head-solid-bg m-portlet--sortable"
+    style=""
+  >
+    <div class="m-portlet__body pos">
+      <table class="table m-table">
+        <tbody>
+          <tr class="m-table">
+            <div class="row" ng-hide="checkProductSelected()">
+              <!--<p>Model: {{selectedPatient|json}}</p>-->
+              <div class="col-md-9" style="padding-right: 0px">
+                <input
+                  type="text"
+                  class="form-control m-input typeahead"
+                  placeholder="Search for Product...."
+                  sf-typeahead
+                  options="exampleOptions"
+                  datasets="productDataSet"
+                  ng-model="selectedProduct"
+                  aria-describedby="basic-addon1"
+                />
+              </div>
+              <div class="col-md-3" style="padding-right: 0px">
+                <a href="../product/create-with-category"
+                  ><button class="btn btn-info" type="button">
+                    Add New Product
+                  </button></a
+                >
+              </div>
+            </div>
+
+            <!-- <div class="row">
+                     <input type="text" class='form-control m-input typeahead' placeholder="Search for Patient...." sf-typeahead options="exampleOptions" datasets="numbersDataset" ng-model="selectedNumber" aria-describedby="basic-addon1">
+
+                     <button class="btn btn-info" type="button" ng-bootbox-custom-dialog ng-bootbox-options="patientDialogOptions" my-enter="doSomething()">
+                         Add New Patient
+                     </button>
+
+                 </div>-->
+          </tr>
+        </tbody>
+      </table>
+
+      <div style="height: 245px">
+        <table class="table table-hover" orderdatatable>
+          <thead>
+            <tr>
+              <th>Product Name</th>
+              <th>Variant Name</th>
+              <th>Quantity</th>
+
+              <th>Cost</th>
+              <th>discount</th>
+              <th>Purchase Unit</th>
+              <th>Expiry Date</th>
+              <th>Total</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr ng-repeat="item in orderlist">
+              <td>
+                {{ item.name }}
+                <input
+                  type="hidden"
+                  value="{{ item.product_id }}"
+                  name="product_ids[]"
+                />
+              </td>
+
+              <td class="text-center">
+                {{ item.variant_name }}
+                <input
+                  type="hidden"
+                  value="{{ item.id }}"
+                  name="variant_ids[]"
+                />
+              </td>
+
+              <td class="text-center">
+                <input
+                  type="number"
+                  value="1"
+                  style="width: 100%"
+                  min="0"
+                  name="quantity[]"
+                  id="quantity"
+                  ng-model="item.quantity"
+                  ng-change="updateOrder()"
+                />
+              </td>
+
+              <td class="text-center">
+                <input
+                  type="number"
+                  step="0.01"
+                  style="width: 100%"
+                  min="0"
+                  value="0"
+                  name="costs[]"
+                  id="cost"
+                  ng-model="item.cost"
+                  ng-change="updateOrder()"
+                />
+              </td>
+
+              <td class="text-center">
+                <input
+                  type="number"
+                  step="0.01"
+                  style="width: 100%"
+                  min="0"
+                  value="0"
+                  name="discounts[]"
+                  ng-model="item.discount"
+                  ng-change="updateOrder()"
+                />
+              </td>
+
+              <td class="text-center">
+                <select name="units[]">
+                  <option value="">Select Unit</option>
+                  <option ng-repeat="unit in units" value="{{ unit.id }}">
+                    {{ unit.name }}
+                  </option>
+                </select>
+              </td>
+
+              <td>
+                <input
+                  type="text"
+                  class="form-control datetimepicker4"
+                  id="datetimepicker4"
+                  data-format="yyyy-mm-dd"
+                  name="expiry_dates[]"
+                />
+                <script type="text/javascript">
+                  $(function () {
+                    $(".datetimepicker4").datepicker({
+                      format: "yyyy-mm-dd",
+                    });
+                  });
+                </script>
+              </td>
+
+              <td class="text-center">
+                <span
+                  >{{ item.product_total = (item.quantity * (item.cost -
+                  item.discount))| number:2 }}<input
+                    type="hidden"
+                    value="{{ (item.quantity * (item.cost - item.discount))}}"
+                    class="product_total"
+                    name="totals[]"
+                /></span>
+              </td>
+
+              <td class="text-center">
+                &nbsp;&nbsp;<i
+                  class="flaticon-delete-1"
+                  title="Remove"
+                  style="cursor: pointer"
+                  ng-click="removeOrder(item)"
+                ></i>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <table
+        id="totalTable"
+        style="
+          width: 100%;
+          float: right;
+          padding: 5px;
+          color: #000;
+          background: #fff;
+        "
+      >
+        <tbody>
+          <tr>
+            <td style="padding: 5px 10px; border-top: 1px solid #ddd">Items</td>
+            <td
+              class="text-right"
+              style="
+                padding: 5px 10px;
+                font-size: 14px;
+                font-weight: bold;
+                border-top: 1px solid #ddd;
+              "
+            >
+              <span id="titems">{{count}}</span>
+            </td>
+            <td style="padding: 5px 10px; border-top: 1px solid #ddd">Total</td>
+            <td
+              class="text-right"
+              style="
+                padding: 5px 10px;
+                font-size: 14px;
+                font-weight: bold;
+                border-top: 1px solid #ddd;
+              "
+            >
+              <span id="total">{{total}}</span>
+            </td>
+          </tr>
+          <tr>
+            <td style="padding: 5px 10px">
+              Order Tax <a href="#" id="pptax2" tabindex="-1"> </a>
+            </td>
+            <td
+              class="text-right"
+              style="
+                padding: 5px 10px;
+                font-size: 14px;
+                font-weight: bold;
+                width: 20%;
+              "
+            >
+              <input
+                type="number"
+                step="0.01"
+                min="0"
+                value="0"
+                name="tax"
+                ng-model="tax"
+                ng-change="updateOrder()"
+                style="width: 30%"
+              />
+            </td>
+
+            <td style="padding: 5px 10px">Discount</td>
+            <td
+              class="text-right"
+              style="padding: 5px 10px; font-weight: bold; width: 10%"
+            >
+              <input
+                type="number"
+                step="0.01"
+                min="0"
+                value="0"
+                name="order_discount"
+                ng-model="orderDiscount"
+                ng-change="updateOrder()"
+                style="width: 100%"
+              />
+            </td>
+          </tr>
+          <tr>
+            <td
+              style="
+                padding: 5px 10px;
+                border-top: 1px solid #666;
+                border-bottom: 1px solid #333;
+                font-weight: bold;
+                background: #333;
+                color: #fff;
+              "
+              colspan="2"
+            >
+              Total Payable <a href="#" id="pshipping" tabindex="-1"> </a>
+              <span id="tship"></span>
+            </td>
+            <td
+              class="text-right"
+              style="
+                padding: 5px 10px 5px 10px;
+                font-size: 14px;
+                border-top: 1px solid #666;
+                border-bottom: 1px solid #333;
+                font-weight: bold;
+                background: #333;
+                color: #fff;
+              "
+              colspan="2"
+            >
+              <span id="gtotal"
+                >{{grandTotal}}<input
+                  type="hidden"
+                  name="payable"
+                  value="{{ grandTotal }}"
+              /></span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div
+        class="btn-group text-center btn-group-lg"
+        style="margin-top: 10px"
+        role="group"
+        aria-label="Large button group"
+      >
+        <a
+          href="javascript:"
+          ng-bootbox-confirm="Are you sure you want to confirm this?"
+          ng-bootbox-confirm-action="clear()"
+          target="_self"
+          class="btn btn-danger m-btn m-btn--icon"
+        >
+          <span>
+            <i class="la la-times-circle"></i>
+            <span> Cancel </span>
+          </span>
+        </a>
+
+        <a href="#" class="btn btn-primary m-btn m-btn--icon">
+          <span>
+            <i class="la la-refresh"></i>
+            <span> Reload Tests </span>
+          </span>
+        </a>
+
+        <a
+          href="add"
+          data-method="post"
+          class="btn btn-success m-btn m-btn--icon"
+        >
+          <span>
+            <i class="la la-save"></i>
+            <span> Save </span>
+          </span>
+        </a>
+        <!--                <div class="form-group">
+                    <a href="add" data-method="post" class="btn btn-danger m-btn m-btn--icon"> Save</a>
+                </div>-->
+      </div>
+    </div>
+  </div>
+</div>
