@@ -11,6 +11,7 @@
     background-color: white;
 }
 
+
 .m-invoice-2 .m-invoice__wrapper .m-invoice__footer {
     margin-top: 0rem;
     padding: 0;
@@ -28,7 +29,7 @@
     width: 100% !important;
 }
 .desktop-hide{
-    display:none;
+    display:none!important;
 }
 @media print{
 .hide-print{
@@ -106,7 +107,7 @@
                             <form class="m-form m-form--fit m-form--label-align-right hide-print"
                                 action="<?php echo Yii::$app->homeUrl?>ajax/submit-department-report" id="m_form"
                                 novalidate="novalidate">
-
+    
                                 <div class="m-invoice__body m-invoice__table--centered ">
                                     <ul class="nav nav-tabs  m-tabs-line m-tabs-line--2x m-tabs-line--success"
                                         role="tablist">
@@ -133,7 +134,7 @@
                                             </a>
                                         </li>
                                         <li class="nav-item m-tabs__item">
-                                            <a class="nav-link m-tabs__link" data-toggle="tab" href="#report"
+                                            <a class="nav-link m-tabs__link" data-toggle="tab" href="#report_tab"
                                                 role="tab">
                                                 Report
                                             </a>
@@ -300,17 +301,25 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- hide fields -->
+                                                          
+                                                        
+
+
+                                        <!--  -->
                                         <div class="tab-pane" id="comment" role="tabpanel">
                                             <div class="col-lg-12 col-md-12 col-sm-12">
                                                 <textarea name="comm" id="comm" class="form-control"
                                                     data-provide="markdown" rows="10"></textarea>
                                             </div>
                                         </div>
-                                        <div class="tab-pane" id="report" role="tabpanel">
+                                        <div class="tab-pane" id="report_tab" role="tabpanel">
                                             <div class="col-lg-12 col-md-12 col-sm-12">
                                                 <textarea name="report" id="report" class="form-control"
                                                     data-provide="markdown" rows="10" oninput="updateParagraph()"></textarea>
                                             </div>
+                                            <input type="hidden" name="item_id" value="<?= $data->item_id?>">
+                                                            <input type="hidden" name="invoice_id" value="<?= $data->sale->invoice_no?>"> 
                                         </div>
                                     </div>
                                     <br>

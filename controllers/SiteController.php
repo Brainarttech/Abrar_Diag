@@ -25,6 +25,10 @@ use app\models\Department;
 use app\models\ItemCategory;
 use yii\helpers\ArrayHelper;
 use app\models\Product;
+use app\models\UserReport;
+use app\models\Patient;
+use yii\db\Query;
+
 use mPDF;
 
 class SiteController extends Controller {
@@ -274,13 +278,69 @@ class SiteController extends Controller {
     public function actionCompleteTest() {
         
         $searchModel = new SalesItemSearch();
+        
         $assign_department = Yii::$app->user->identity->assign_department;
         $dataProvider = $searchModel->searchAssignCompleteDepartment(Yii::$app->request->queryParams, $assign_department);
         return $this->render('complete-test', [
                     'searchModel' => $searchModel,
                     'dataProvider' => $dataProvider,
+                    
         ]);
     }
+ 
+    public function actionGenerateReportUser()
+    {
+        // Ensure the request is AJAX to enhance security
+        
+        // Get the raw JSON data sent in the AJAX request
+        $rawData = Yii::$app->request->rawBody;
+
+        // Log the raw JSON data without any extra information
+        Yii::info("Raw JSON Data: $rawData");
+
+        // Decode the JSON data
+        $jsonData = json_decode($rawData, true);
+
+        // Now you can access the individual form field values and the linkId from the $jsonData array
+        $invoice_id = $jsonData['inputFieldName1'];
+        $item_id = $jsonData['inputFieldName2'];
+        $patient_id = $jsonData['inputFieldName3'];
+        $linkId = $jsonData['linkId'];
+
+        $userdata = UserReport::find()->where(['invoice_no' => $invoice_id])->where(['paitent_id' => $patient_id])->where(['item_id' => $item_id])->one();
+        $patient_data = Patient::find()->where(['id' => $patient_id])->one();
+        $item_data = ItemName::find()->where(['id' => $item_id])->one();
+        
+
+        $get_invoice_data=$userdata->invoice_no;
+        $get_patient_id=$userdata->patient_id;
+        $get_item_id=$userdata->item_id;
+
+        if ($userdata !== null) {
+            $get_invoice_data = $userdata->invoice_no;
+            $get_patient_id = $userdata->patient_id;
+            $get_item_id = $userdata->item_id;
+    
+            // Render the view file with the provided data
+            $html = $this->renderAjax('generate-report-user', [
+                'invoice_no' => $get_invoice_data,
+                'patient_id' => $get_patient_id,
+                'item_data' => $item_data,
+                'patient_data'=>$patient_data,
+                'report_data'=>$userdata->report,
+            ]);
+    
+            // Now we can use these variables in your controller logic as needed
+            return $html;
+        }
+    
+        return 0;
+    }
+
+
+
+
+
 
     public function actionReport() {
         if (Yii::$app->request->isAjax) {
