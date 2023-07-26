@@ -6,6 +6,7 @@ use kartik\grid\GridView;
 use yii\helpers\Url;
 use yii\widgets\Pjax;
 use kartik\dropdown\DropdownX;
+use app\models\UserReport;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\SalesSearch */
@@ -14,7 +15,11 @@ use kartik\dropdown\DropdownX;
 $this->title = 'Complete Dignostics Tests';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-
+<style>
+    .desktop-hide{
+        display:none!important;
+    }
+</style>
 <div class="department-index">
 
 
@@ -187,20 +192,32 @@ $this->params['breadcrumbs'][] = $this->title;
                         // $options['target'] = '_blank';
                         return '<li>' . Html::a($label, $url, $options) . '</li>' . PHP_EOL;
                     },
-                    'print_report' => function ($url, $model) {
-                        $title = Yii::t('app', 'Print Report');
-                        $options = []; // you forgot to initialize this
-                        $icon = '<span class="fa fa-print"></span>';
-                        $label = $icon . ' ' . $title;
-                        $url = Yii::$app->homeUrl . 'site/lab-form-print?id=' . $model->id;
-                        // $options['target'] = '_blank';
-                        $options = ['data-pjax' => 0, 'target' => "_blank"];
-                        $departmentIds = [10, 5, 6, 1, 8, 9];
+                        'print_report' => function ($url, $model) {
+                            $title = Yii::t('app', 'Print Report');
+                            $options = []; // you forgot to initialize this
+                            $icon = '<span class="fa fa-print"></span>';
+                            $label = $icon . ' ' . $title;
+              if (UserReport::find()->where(['patient_id' =>  $model->sale->patient->id])->exists()) {
+                $options = ['data-pjax' => 0, 'class' => "print_report"];
+                            $url = "";
 
-if (in_array(Yii::$app->user->identity->assign_department, $departmentIds)) {
-    return '<li>' . Html::a($label, $url, $options) . '</li>' . PHP_EOL;
-}
-                    },
+                        }else{
+                            $url = Yii::$app->homeUrl . 'site/lab-form-print?id=' . $model->id;
+                            $options = ['data-pjax' => 0, 'target' => "_blank"];
+                        }
+                    
+                            // $options['target'] = '_blank';
+                  
+                            $departmentIds = [10, 5, 6, 1, 8, 9];
+                            $inputField1 = Html::input('text', 'inputFieldName1',  $model->sale->invoice_no, ['class' => 'form-control desktop-hide']);
+                            $inputField2 = Html::input('text', 'inputFieldName2', $model->item_id, ['class' => 'form-control desktop-hide']);
+                            $inputField3 = Html::input('text', 'inputFieldName3', $model->sale->patient->id, ['class' => 'form-control desktop-hide']);
+
+    if (in_array(Yii::$app->user->identity->assign_department, $departmentIds)) {
+    
+        return '<li>' . Html::a($label, $url,$options) . $inputField1 . $inputField2 . $inputField3.'</li>' . PHP_EOL;
+    }
+                        },
                     'reporting_doc' => function ($url, $model) {
                         $title = Yii::t('app', 'Reporting Doc.');
                         $options = []; // you forgot to initialize this
@@ -220,7 +237,8 @@ if (in_array(Yii::$app->user->identity->assign_department, $departmentIds)) {
                         $label = $icon . ' ' . $title;
                         $url = Yii::$app->homeUrl . 'site/lab-form-print-pdf?id=' . $model->id;
                         // $options['target'] = '_blank';
-                                          // $options['target'] = '_blank';
+                        // $options['target'] = '_blank';
+
                         $options = ['data-pjax' => 0, 'onclick' => "generateReport(event,this)"];
                         $departmentIds = [10, 5, 6, 1, 8, 9];
 
@@ -237,3 +255,87 @@ if (in_array(Yii::$app->user->identity->assign_department, $departmentIds)) {
     ?>
 </div>
 
+<script>
+  // JavaScript script to remove href from anchor tags with class "print_report"
+  document.addEventListener('DOMContentLoaded', function() {
+    const anchorTags = document.querySelectorAll('a.print_report'); // Select all anchor tags with class "print_report"
+    for (const anchorTag of anchorTags) {
+      anchorTag.removeAttribute('href'); // Remove the href attribute
+    }
+  });
+
+  
+    const csrfToken = "<?= Yii::$app->request->csrfToken; ?>";
+
+
+  
+function sendreport(event, anchorTag) {
+    event.preventDefault(); // Prevent default link behavior (optional, to keep the link from navigating)
+
+    // Find the nearest <li> element that contains the anchor tag
+    const listItem = anchorTag.closest('li');
+
+    // Find all input fields within the <li> element
+    const inputFields = listItem.querySelectorAll('input');
+
+    // Create the data object to store input field values
+    const data = {};
+
+    // Loop through each input field and get its value
+    inputFields.forEach(input => {
+        data[input.name] = input.value;
+    });
+
+    // Get the data-link-id value from the anchor tag
+    const linkId = anchorTag.getAttribute('data-link-id');
+
+    // Create the flat JSON format
+    const jsonData = JSON.stringify({
+        ...data,
+        linkId: linkId,
+    });
+
+    // Make the AJAX POST request to the Yii2 controller using jQuery
+    $.ajax({
+        url: '/site/generate-report-user',
+        type: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': '<?= Yii::$app->request->csrfToken; ?>', // Replace this with the actual CSRF token if not using PHP
+        },
+        data: jsonData,
+        dataType: 'text',
+        success: function(responseData) {
+            // Create a new window to display the response content
+       
+var myWindow = window.open("", "Receipt", "height=900,width=900");
+      myWindow.document.write("<html><head><title>Report Of Patient</title>");
+      myWindow.document.write(
+        '<style type="text/css"> *, html {margin:0;padding:0;} </style>'
+      );
+      myWindow.document.write("</head><body>");
+      myWindow.document.write(responseData);
+      myWindow.document.write("</body></html>");
+      myWindow.document.close(); 
+
+
+        },
+        error: function(error) {
+            console.error('Error:', error);
+        }
+    });
+}
+
+// Attach the event listener to anchor tags with class "print_report"
+document.addEventListener('DOMContentLoaded', function() {
+  const anchorTags = document.querySelectorAll('a.print_report');
+  anchorTags.forEach(anchorTag => {
+    anchorTag.addEventListener('click', function(event) {
+      sendreport(event, this);
+    });
+  });
+});
+
+
+
+</script>

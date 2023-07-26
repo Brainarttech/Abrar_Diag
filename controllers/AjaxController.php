@@ -29,6 +29,7 @@ use app\models\User;
 use app\models\LabFormSubmit;
 use app\models\LabFormFieldSubmit;
 use app\models\Mop;
+use app\models\UserReport;
 use yii;
 use yii\db\Query;
 use yii\filters\AccessControl;
@@ -612,7 +613,24 @@ class AjaxController extends Controller {
         // die();
       
         $report = $_POST['report'];
-    
+        $new_invoice_id=$_POST['invoice_id'];
+        $new_item_id=$_POST['item_id'];
+       
+        $user_report=new UserReport;
+        $user_report->invoice_no=$new_invoice_id;
+        $patient_data = Sales::find()->where(['=', 'invoice_no',$new_invoice_id])->one();
+        
+
+        // $rows = (new Sales)->where(['invoice_no', $new_invoice_id])->one();
+        // $rows = Sales::where(['invoice_no' => $new_invoice_id])->one();
+     
+    //    var_dump($rows); 
+
+        $user_report->item_id=$new_item_id;
+        $user_report->report=$report;
+        $user_report->patient_id=$patient_data->patient_id;
+        $user_report->save();
+       
         $id = $_POST['sale_item_id'];
         $push = 0;
         $extra = 0;
