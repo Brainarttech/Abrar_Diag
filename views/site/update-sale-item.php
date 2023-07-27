@@ -29,7 +29,7 @@
     width: 100% !important;
 }
 .desktop-hide{
-    display:none!important;
+    display:none;
 }
 @media print{
 .hide-print{
@@ -41,7 +41,6 @@
 }
 
 </style>
-
 
 <div class="m-content">
     <div class="row">
@@ -92,11 +91,11 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="m-invoice__container m-invoice__container--centered desktop-hide">
+                                <div class="m-invoice__container m-invoice__container--centered -desktop-hide">
                                     <div class="m-invoice__logo">
                                        <h2>Report</h2>
                                           
-                                            <p id="report_value"></p>
+                                            <div id="report_value"></div>
                                        
                                         
                                     </div>
@@ -316,7 +315,7 @@
                                         <div class="tab-pane" id="report_tab" role="tabpanel">
                                             <div class="col-lg-12 col-md-12 col-sm-12">
                                                 <textarea name="report" id="report" class="form-control"
-                                                    data-provide="markdown" rows="10" oninput="updateParagraph()"></textarea>
+                                                     rows="10"></textarea>
                                             </div>
                                             <input type="hidden" name="item_id" value="<?= $data->item_id?>">
                                                             <input type="hidden" name="invoice_id" value="<?= $data->sale->invoice_no?>"> 
@@ -353,6 +352,14 @@
 
        
         <script>
+
+tinymce.init({
+            selector: '#report',
+        });
+
+        // Custom function to update the paragraph
+       
+
         <?php
         $option_array = array();
         $paid_array = array();
@@ -503,10 +510,10 @@
             BootstrapMarkdown.init()
         });
 
-        function updateParagraph() {
-  let textareaValue = document.getElementById('report').value;
-  document.getElementById('report_value').textContent = textareaValue;
-}
+        function strips_tags(input) {
+        return input.replace(/<[^>]+>/g, '');
+    }
+       
 
         $("#submit").click(function() {
             var me = $(this);
@@ -521,8 +528,14 @@
                 var url = form.attr('action');
                 console.log(form.serialize());
                 var comment = $('#comm').val();
-                var report = $('#report').val();
+                var report = tinymce.get('report').getContent();
+  
+  // Get the textarea element by its ID and append the HTML content to it
+  document.getElementById('report_value').innerHTML = report;
 
+
+
+               
                 var id = <?= $_GET['id']; ?>
 
                 console.log(comment);
@@ -530,14 +543,14 @@
                 $.ajax({
                     type: "POST",
                     url: url,
-                    data: form.serialize() + "&comment=" + comment + "&sale_item_id=" + id,
+                    data: form.serialize() +"&report_data=" + report + "&comment=" + comment + "&sale_item_id=" + id,
                     success: function(data) {
                         var printConfirmation = window.confirm("Print the page?");
                         if (printConfirmation) {
 
                            window.print();
                         }
-                        window.location = "<?= Yii::$app->homeUrl ?>site/view-sale-item?id=<?=$_GET['id']?>";
+                        // window.location = "<?= Yii::$app->homeUrl ?>site/view-sale-item?id=<?=$_GET['id']?>";
                     },
                     complete: function() {
                         me.data('requestRunning', false);

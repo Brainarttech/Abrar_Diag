@@ -239,7 +239,7 @@
                                         </div>
                                         <div class="tab-pane" id="report" role="tabpanel">
                                             <div class="col-lg-12 col-md-12 col-sm-12">
-                                                <textarea id="reportdata" name="rowdata" class="form-control" data-provide="markdown" rows="10" readonly><?=$data->report?></textarea>
+                                                <textarea id="reportdata" name="rowdata" class="form-control" data-provide="markdown" rows="10" readonly><?=strip_tags($data->report)?></textarea>
                                             </div>
                                         </div>
                                     </div>
