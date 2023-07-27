@@ -611,7 +611,7 @@ class AjaxController extends Controller {
     public function actionSubmitDepartmentReport() {
         // echo Helper::getLabFormName($_POST['examrequired']);
         // die();
-        die('');
+    
         $report = $_POST['report_data'];
         $new_invoice_id=$_POST['invoice_id'];
         $new_item_id=$_POST['item_id'];
