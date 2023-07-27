@@ -611,10 +611,11 @@ class AjaxController extends Controller {
     public function actionSubmitDepartmentReport() {
         // echo Helper::getLabFormName($_POST['examrequired']);
         // die();
-      
-        $report = $_POST['report'];
+        die('');
+        $report = $_POST['report_data'];
         $new_invoice_id=$_POST['invoice_id'];
         $new_item_id=$_POST['item_id'];
+     
        
         $user_report=new UserReport;
         $user_report->invoice_no=$new_invoice_id;
@@ -632,6 +633,7 @@ class AjaxController extends Controller {
         $user_report->save();
        
         $id = $_POST['sale_item_id'];
+    
         $push = 0;
         $extra = 0;
         if (isset($_POST['product'])) {
@@ -702,7 +704,7 @@ class AjaxController extends Controller {
 
         $sale_item = SalesItem::findOne($id);
         $sale_item->comment = $_POST['comment'];
-        $sale_item->report = $_POST['report'];
+        $sale_item->report = $report;
       
         $sale_item->test_status = "2"; //Complete
         $sale_item->updated_by = Yii::$app->user->id;

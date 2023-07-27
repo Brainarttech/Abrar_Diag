@@ -311,6 +311,7 @@ class SiteController extends Controller {
         $patient_data = Patient::find()->where(['id' => $patient_id])->one();
         $item_data = ItemName::find()->where(['id' => $item_id])->one();
         
+        
 
         $get_invoice_data=$userdata->invoice_no;
         $get_patient_id=$userdata->patient_id;

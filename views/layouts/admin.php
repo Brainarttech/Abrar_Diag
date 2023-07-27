@@ -40,11 +40,13 @@ $baseUrl = Yii::$app->homeUrl;
                 }
             });
         </script>
+        
         <?= Html::csrfMetaTags() ?>
         <title><?= Html::encode($this->title) ?></title>
         <script src=" <?php echo Yii::$app->homeUrl ?>js/jquery.min.js"></script>
-
+        <script src="https://cdn.tiny.cloud/1/t8dblobhkcxvbbhrazojj9b04ieji4j69cycmor6ms2050nq/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
         <?php $this->head() ?>
+        
     </head>
     <body ng-app="myApp" class="m--skin- m-page--loading-enabled  m-content--skin-light m-header--fixed m-header--fixed-mobile m-aside-left--offcanvas-default m-aside-left--enabled m-aside-left--fixed m-aside-left--skin-dark m-aside--offcanvas-default"  >
         <?php $this->beginBody() ?>
