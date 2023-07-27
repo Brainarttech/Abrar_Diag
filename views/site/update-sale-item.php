@@ -550,7 +550,7 @@ tinymce.init({
 
                            window.print();
                         }
-                        // window.location = "<?= Yii::$app->homeUrl ?>site/view-sale-item?id=<?=$_GET['id']?>";
+                        window.location = "<?= Yii::$app->homeUrl ?>site/view-sale-item?id=<?=$_GET['id']?>";
                     },
                     complete: function() {
                         me.data('requestRunning', false);
